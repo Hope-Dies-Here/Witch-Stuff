@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celestial Oracle Age Diviner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;600&display=swap');
+        .answerContainer{
+          margin-block: .5rem 1.5rem;
+          height: 3rem;
+        }
+        .answer{
+          font-weight: bold;
+          text-align: center;
+          padding: 1rem;
+          width: 18rem;
+          border-radius: .7rem;
+          margin: auto;
+          visibility: hidden;
+          transition: .8s;
+          animation: loadAge 1s ease-in-out;
+          background-color: #1d2b49b3;
+        }
+        @keyframes loadAge {
+          0%{
+            scale: 0;
+          }
+          50%{
+            scale: 1.25;
+          }
+          100%{
+            scale: 1;
+          }
+        }
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #0F172A;
+            overflow-x: hidden;
+        }
+
+        .celestial-bg {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(62, 20, 123, 0.4) 0%, transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(25, 80, 150, 0.4) 0%, transparent 30%);
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .moon {
+          opacity: .9;
+            position: absolute;
+            top: 15%;
+            right: 8%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #F0F0F0;
+            box-shadow: 0 0 20px rgba(240, 240, 240, 0.6);
+        }
+
+        .moon::after {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 15%;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background-color: #0F172A;
+            opacity: 0.8;
+        }
+
+        .oracle-eye {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            background: radial-gradient(ellipse at center, #4B5563 0%, #1E293B 70%, #0F172A 100%);
+            border-radius: 50% / 100% 100% 0 0;
+            overflow: hidden;
+            animation: blink 6s infinite;
+        }
+
+        .oracle-eye::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at center, #60A5FA 0%, #3B82F6 50%, #1D4ED8 100%);
+            border-radius: 50%;
+            top: 20px;
+            left: 70px;
+            animation: look 8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes look {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-20px); }
+            75% { transform: translateX(20px); }
+        }
+
+        .oracle-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .oracle-input:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+        }
+
+        .divine-button {
+            background: linear-gradient(135deg, #4338CA 0%, #3B82F6 100%);
+            transition: all 0.3s ease;
+        }
+
+        .divine-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+
+        .cosmic-dust {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #60A5FA;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen celestial-bg text-white p-8 relative">
+    <div class="max-w-4xl mx-auto relative">
+        <div class="moon"></div>
+        
+        <header class="text-center mb-16">
+            <h1 class="font-cinzel text-5xl font-bold mb-2 text-blue-300">Celestial Oracle</h1>
+            <p class="text-xl text-blue-200">Divine the Age Hidden Within Your Name</p>
+           
+        </header>
+
+        <div class="flex flex-col items-center">
+            <div class="oracle-eye mb-8"></div>
+            <p class="text-lg text-blue-200 ">Gaze into the Oracle's Eye and Reveal Your Temporal Essence</p>
+        </div>
+        <div class="answerContainer">
+          <p class="answer text-lg text-blue-200" id="answer">PLACEHOLDER</p>
+        </div>
+        <form class="space-y-6 max-w-md mx-auto" id="daForm">
+            <div>
+                <label for="name" class="block text-sm font-medium text-blue-300 mb-2">Your Celestial Name</label>
+                <input type="text" id="name" name="name" required
+                       class="oracle-input w-full px-4 py-3 rounded-full text-white placeholder-blue-300 focus:outline-none"
+                       placeholder="Enter the name to be divined">
+            </div>
+            <button type="submit"
+                    class="divine-button w-full py-3 px-4 rounded-full text-white font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Divine My Cosmic Age
+            </button>
+        </form>
+        
+        <div class="mt-12 text-center">
+            <p class="text-blue-300 italic">"In the tapestry of the cosmos, every name is a thread of starlight, each age a constellation waiting to be discovered."</p>
+        </div>
+    </div>
+
+    <script>
+        // Add stars
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 4}s`;
+            document.body.appendChild(star);
+        }
+
+        // Add cosmic dust
+        for (let i = 0; i < 50; i++) {
+            const dust = document.createElement('div');
+            dust.classList.add('cosmic-dust');
+            dust.style.left = `${Math.random() * 100}%`;
+            dust.style.top = `${Math.random() * 100}%`;
+            dust.style.animationDuration = `${20 + Math.random() * 20}s`;
+            dust.style.animationDelay = `${Math.random() * 20}s`;
+            document.body.appendChild(dust);
+        }
+
+        // Add subtle interactivity
+        const input = document.querySelector('#name');
+        const oracleEye = document.querySelector('.oracle-eye');
+
+        input.addEventListener('focus', () => {
+            oracleEye.style.animation = 'none';
+        });
+
+        input.addEventListener('blur', () => {
+            oracleEye.style.animation = 'blink 6s infinite';
+        });
+
+        input.addEventListener('input', (e) => {
+            const inputLength = e.target.value.length;
+            const translateX = (inputLength % 10) * 4 - 20; // Move eye based on input length
+            oracleEye.querySelector('::before').style.transform = `translateX(${translateX}px)`;
+        });
+        
+        const form = document.getElementById("daForm")
+        const getAge = async (url) => {
+          try {
+              const response = await fetch(url)
+              if(!response.ok){
+                throw new Error(`Response Status: ${response.status}`)
+              }
+              const data = await response.json()
+              const answer = document.getElementById("answer")
+              if(data.age == null) {
+                answer.innerText = `${data.name} is Invalid Name`
+              } else {
+                answer.innerText = `${data.name} Will Live ${data.age} Years`
+              }
+              answer.style = 'visibility: visible;'
+              console.log(data)
+            } catch (e) {
+              console.log(e)
+            }
+            }
+        
+        form.addEventListener("submit", (e) => {
+          e.preventDefault()
+          const name = document.getElementById("name")
+          getAge(`https://api.agify.io/?name=${name.value}`)
+        })
+    </script>
+</body>
+</html>
